@@ -1,8 +1,8 @@
 package com.cjg.scene.dto
 
 data class BoardDto(
-    val category: String,
-    val title: String,
-    val content : String ?= null,
-    val userId: String,
+    var category: String ?=null,
+    var title: String ?=null,
+    var content : String ?= null,
+    var userId: String ?=null
 )

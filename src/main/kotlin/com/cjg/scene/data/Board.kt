@@ -17,6 +17,9 @@ data class Board (
     var content:String ?= null,
 
     @Field("userId")
-    var userId:String ?= null
+    var userId:String ?= null,
+
+    @Field("category")
+    var category:String ?= null
 
 )

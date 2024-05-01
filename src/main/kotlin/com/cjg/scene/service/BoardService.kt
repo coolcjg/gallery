@@ -9,21 +9,25 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional(readOnly=true)
 class BoardService(
-
     private val boardRepository:BoardRepository,
-
 ) {
-
     @Transactional
     fun create(boardDto: BoardDto):String?{
+        var message = ""
 
         val board = Board()
         board.title = boardDto.title
         board.content = boardDto.content
         board.userId = boardDto.userId
 
-        val saveBoard = boardRepository.save(board)
-        return saveBoard.id
-    }
+        val savedBoard = boardRepository.save(board)
 
+        if(savedBoard.id != null){
+            message = "created"
+        }else{
+            message = "creation failed"
+        }
+
+        return message
+    }
 }
