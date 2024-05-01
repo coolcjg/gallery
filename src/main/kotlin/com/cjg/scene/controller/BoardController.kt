@@ -1,15 +1,21 @@
 package com.cjg.scene.controller
 
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import com.cjg.scene.dto.BoardDto
+import com.cjg.scene.service.BoardService
+import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/board")
-class BoardController {
+class BoardController(
+    private val boardService: BoardService,
+) {
 
-    @GetMapping("/list")
+    @GetMapping("/board/list")
     fun list(): String{
         return "abc"
+    }
+
+    @PostMapping("/board")
+    fun create(boardDto: BoardDto):String?{
+        return boardService.create(boardDto)
     }
 }
