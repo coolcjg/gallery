@@ -10,8 +10,8 @@ class BoardController(
 ) {
 
     @GetMapping("/board/list")
-    fun list(): String{
-        return "abc"
+    fun list(boardDto : BoardDto): Map<String,Any>{
+        return boardService.list(boardDto)
     }
 
     @PostMapping("/board")

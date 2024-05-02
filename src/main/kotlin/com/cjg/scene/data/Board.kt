@@ -1,8 +1,10 @@
 package com.cjg.scene.data
 
+import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.data.mongodb.core.mapping.Field
+import java.time.LocalDateTime
 
 @Document
 data class Board (
@@ -20,6 +22,11 @@ data class Board (
     var userId:String ?= null,
 
     @Field("category")
-    var category:String ?= null
+    var category:String ?= null,
+
+    @CreatedDate
+    val createDate: LocalDateTime ?= null
+
+
 
 )
