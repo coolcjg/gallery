@@ -13,4 +13,8 @@ data class GalleryDto(
     var thumbnailFileName : String ?= null
     var encodingFilePath : String ?= null
     var encodingFileName : String ?= null
+
+    var thumbnailFileUrl : String ? = null
+    var encodingFileUrl : String ?= null
+
 }
