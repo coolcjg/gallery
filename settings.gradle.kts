@@ -1,1 +1,1 @@
-rootProject.name = "scene"
+rootProject.name = "gallery"

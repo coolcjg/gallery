@@ -1,4 +1,4 @@
-package com.cjg.scene
+package com.cjg.gallery
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
