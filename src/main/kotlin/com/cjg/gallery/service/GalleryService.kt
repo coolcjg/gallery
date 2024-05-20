@@ -4,7 +4,6 @@ import com.cjg.gallery.document.Gallery
 import com.cjg.gallery.dto.GalleryDto
 import com.cjg.gallery.dto.SearchParamDto
 import com.cjg.gallery.repository.GalleryRepository
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
@@ -17,7 +16,6 @@ import java.time.format.DateTimeFormatter
 class GalleryService(
     private val galleryRepository:GalleryRepository,
 ) {
-    private val log = LoggerFactory.getLogger(GalleryService::class.java)
 
     @Value("\${server.port}")
     lateinit var serverPort : String
@@ -61,29 +59,35 @@ class GalleryService(
         }
 
         result.put("data", boardDtoList)
-        result.put("prevPage", getPrevPageInfo(searchParamDto))
-        result.put("nextPage", getNextPageInfo(searchParamDto, page.totalPages))
+        result.put("prevPage", getPrevPageInfo(searchParamDto, getListUrl(serverDomain, serverPort)))
+        result.put("nextPage", getNextPageInfo(searchParamDto, page.totalPages, getListUrl(serverDomain, serverPort)))
+        result.put("lastPage", getLastPageInfo(searchParamDto, page.totalPages, getListUrl(serverDomain, serverPort)))
 
         return result
     }
 
-    fun getPrevPageInfo(searchParamDto: SearchParamDto) : String{
+    fun getPrevPageInfo(searchParamDto: SearchParamDto, listUrl : String) : String{
         var prevPageUrl = ""
         if(searchParamDto.pageNumber >= 2){
-            prevPageUrl = getListUrl() + "pageNumber=${searchParamDto.pageNumber-1}&pageSize=${searchParamDto.pageSize}"
+            prevPageUrl = listUrl + "pageNumber=${searchParamDto.pageNumber-1}&pageSize=${searchParamDto.pageSize}"
         }
         return prevPageUrl
     }
 
-    fun getNextPageInfo(searchParamDto: SearchParamDto, totalPages:Int) : String{
+    fun getNextPageInfo(searchParamDto: SearchParamDto, totalPages:Int, listUrl : String) : String{
         var nextPageUrl = ""
         if(searchParamDto.pageNumber < totalPages){
-            nextPageUrl = getListUrl() + "pageNumber=${searchParamDto.pageNumber+1}&pageSize=${searchParamDto.pageSize}"
+            nextPageUrl = listUrl + "pageNumber=${searchParamDto.pageNumber+1}&pageSize=${searchParamDto.pageSize}"
         }
         return nextPageUrl
     }
 
-    fun getListUrl():String{
+    fun getLastPageInfo(searchParamDto: SearchParamDto, totalPages:Int, listUrl : String) : String{
+        return listUrl + "pageNumber=${totalPages}&pageSize=${searchParamDto.pageSize}"
+
+    }
+
+    fun getListUrl(serverDomain : String, serverPort:String):String{
         return "$serverDomain:$serverPort/gallery/list?"
     }
 
