@@ -21,7 +21,7 @@ data class Gallery (
     var type:String ?= null,
 
     @Field("regDate")
-    val regDate:LocalDateTime ?= null,
+    var regDate:LocalDateTime ?= null,
 
     @Field("thumbnailFilePath")
     var thumbnailFilePath:String ?= null,
@@ -33,6 +33,5 @@ data class Gallery (
     var encodingFilePath:String ?= null,
 
     @Field("encodingFileName")
-    var encodingFileName:String ?= null,
-
+    var encodingFileName:String ?= null
 )

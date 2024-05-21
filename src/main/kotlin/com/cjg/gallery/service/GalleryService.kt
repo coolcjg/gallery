@@ -53,7 +53,7 @@ class GalleryService(
             galleryDto.encodingFileUrl = serverDomain + ":" + serverPort + uploadPathPrefix  + element.encodingFilePath + element.encodingFileName
 
             if(element.regDate != null){
-                galleryDto.regDate =  element.regDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+                galleryDto.regDate =  element.regDate?.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
             }
             boardDtoList.add(galleryDto)
         }
