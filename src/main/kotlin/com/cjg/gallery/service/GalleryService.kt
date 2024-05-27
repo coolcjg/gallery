@@ -5,6 +5,7 @@ import com.cjg.gallery.dto.GalleryDto
 import com.cjg.gallery.dto.SearchParamDto
 import com.cjg.gallery.repository.GalleryRepository
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import org.springframework.data.mongodb.core.MongoTemplate
@@ -16,7 +17,6 @@ import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
-import kotlin.collections.HashMap
 
 @Service
 @Transactional(readOnly=true)
@@ -36,9 +36,6 @@ class GalleryService(
 
     fun list(searchParamDto : SearchParamDto):Map<String, Any>{
 
-        println("list 파람");
-        println(searchParamDto);
-
         val result = HashMap<String, Any>()
 
         //파라미터 검증
@@ -47,11 +44,8 @@ class GalleryService(
         //페이징 처리
         val pageable = PageRequest.of(searchParamDto.pageNumber-1, searchParamDto.pageSize, Sort.Direction.DESC, "regDate")
 
-        //검색 조건절
-        val page = galleryRepository.findAll(pageable)
-
         //MongoTemplate
-        val query = Query();
+        val query = Query()
 
         if(searchParamDto.type != "all"){
             query.addCriteria(Criteria.where("type").`is`(searchParamDto.type));
@@ -100,10 +94,9 @@ class GalleryService(
 
         }
 
-        var list:List<Gallery> = mongoTemplate.find<Gallery>(query, Gallery::class.java)
-
-        println("list");
-        println(list.size);
+        val count = mongoTemplate.count(query, Gallery::class.java)
+        val list:List<Gallery> = mongoTemplate.find(query.with(pageable), Gallery::class.java)
+        val page = PageImpl(list, pageable, count)
 
         //날짜 형식 변환
         val boardDtoList = mutableListOf<GalleryDto>()
