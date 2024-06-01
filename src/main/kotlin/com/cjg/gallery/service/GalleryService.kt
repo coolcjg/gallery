@@ -164,4 +164,16 @@ class GalleryService(
             searchParamDto.pageSize = 10
         }
     }
+
+    fun delete(galleryDto : GalleryDto):Map<String,Any>{
+        val result = HashMap<String, Any>()
+
+        if(galleryDto.galleryIds!=null){
+            for(i in galleryDto.galleryIds)
+                galleryRepository.deleteByGalleryId(i.toInt())
+        }
+
+        result["message"] = "success"
+        return result;
+    }
 }
