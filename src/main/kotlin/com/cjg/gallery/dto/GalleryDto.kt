@@ -16,6 +16,6 @@ data class GalleryDto(
     var thumbnailFileUrl : String ? = null,
     var encodingFileUrl : String ?= null,
 
-    val galleryIds: Array<String> ?= null
+    var galleryIds: Array<String> ?= null
 )
 

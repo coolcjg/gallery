@@ -169,7 +169,7 @@ class GalleryService(
         val result = HashMap<String, Any>()
 
         if(galleryDto.galleryIds!=null){
-            for(i in galleryDto.galleryIds)
+            for(i in galleryDto.galleryIds!!)
                 galleryRepository.deleteByGalleryId(i.toInt())
         }
 
