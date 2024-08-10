@@ -109,10 +109,10 @@ class GalleryService(
             galleryDto.type = element.type
 
             galleryDto.thumbnailFileName = element.thumbnailFileName
-            galleryDto.thumbnailFileUrl = serverDomain + ":" + serverPort + uploadPathPrefix + element.thumbnailFilePath + element.thumbnailFileName
+            galleryDto.thumbnailFileUrl = serverDomain + uploadPathPrefix + element.thumbnailFilePath + element.thumbnailFileName
 
             galleryDto.encodingFileName = element.encodingFileName
-            galleryDto.encodingFileUrl = serverDomain + ":" + serverPort + uploadPathPrefix  + element.encodingFilePath + element.encodingFileName
+            galleryDto.encodingFileUrl = serverDomain + uploadPathPrefix  + element.encodingFilePath + element.encodingFileName
 
             if(element.regDate != null){
                 galleryDto.regDate =  element.regDate?.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
@@ -121,9 +121,9 @@ class GalleryService(
         }
 
         result.put("data", boardDtoList)
-        result.put("prevPage", getPrevPageInfo(searchParamDto, getListUrl(serverDomain, serverPort)))
-        result.put("nextPage", getNextPageInfo(searchParamDto, page.totalPages, getListUrl(serverDomain, serverPort)))
-        result.put("lastPage", getLastPageInfo(searchParamDto, page.totalPages, getListUrl(serverDomain, serverPort)))
+        result.put("prevPage", getPrevPageInfo(searchParamDto, getListUrl(serverDomain)))
+        result.put("nextPage", getNextPageInfo(searchParamDto, page.totalPages, getListUrl(serverDomain)))
+        result.put("lastPage", getLastPageInfo(searchParamDto, page.totalPages, getListUrl(serverDomain)))
 
         return result
     }
@@ -149,8 +149,8 @@ class GalleryService(
 
     }
 
-    fun getListUrl(serverDomain : String, serverPort:String):String{
-        return "$serverDomain:$serverPort/gallery/list?"
+    fun getListUrl(serverDomain : String):String{
+        return "$serverDomain/gallery/list?"
     }
 
     fun checkListParam(searchParamDto:SearchParamDto){
